@@ -1,0 +1,4 @@
+name = Bibliotek.dk - Further Search
+description = Adds a link on manifestations for further search
+core = 7.x
+package = Bibliotek.dk

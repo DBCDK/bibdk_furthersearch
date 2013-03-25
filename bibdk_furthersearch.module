@@ -1,3 +1,15 @@
 <?php
 
 module_load_include('inc', 'bibdk_furthersearch', 'bibdk_furthersearch.field');
+
+/**
+ * Implements hook_theme().
+ */
+function bibdk_furthersearch_theme() {
+  return array(
+    'bibdk_furthersearch_tab_content' => array(
+      'variables' => array('types' => array(), 'fictions' => array(), 'elements' => array()),
+      'template' => 'theme/bibdk_furthersearch',
+    )
+  );
+}

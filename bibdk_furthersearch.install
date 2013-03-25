@@ -27,10 +27,10 @@ function bibdk_furthersearch_ding_entity_fields() {
         ),
       ),
       'instance' => array(
-        'ding_entity_type' => 'bibdkManifestation',
+        'ding_entity_type' => 'bibdkWorkEntity',
         'label' => t('Further search'),
-        'bundle' => 'bibdkManifestation',
-        'entity_type' => 'bibdkManifestation',
+        'bundle' => 'bibdkWorkEntity',
+        'entity_type' => 'bibdkWorkEntity',
         'display' => $display_full,
       ),
     ),

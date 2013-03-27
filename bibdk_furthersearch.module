@@ -6,6 +6,7 @@ module_load_include('inc', 'bibdk_furthersearch', 'bibdk_furthersearch.field');
  * Implements hook_menu().
  */
 function bibdk_furthersearch_menu() {
+  //XXX mmj is this method necessary?
   $items['bibdk_furthersearch/submit'] = array(
     'page callback' => 'bibdk_furthersearch_form_submit',
     'page arguments' => array(1, 2, 3, 4, 5, 6),
@@ -19,6 +20,7 @@ function bibdk_furthersearch_menu() {
  * Implements hook_theme().
  */
 function bibdk_furthersearch_theme() {
+  //XXX mmj is this method necessary?
   return array(
     'bibdk_furthersearch_tab_content' => array(
       'variables' => array('types' => array(), 'fictions' => array(), 'elements' => array()),
@@ -28,13 +30,13 @@ function bibdk_furthersearch_theme() {
 }
 
 /**
- * @param $furtherSearchArray
- * @internal param $form
- * @internal param $form_state
- * @return mixed
+ * Returns table with checkboxes for further searches
+ *
+ * @param array $furtherSearchArray
+ * @param string $id
+ * @return array
  */
-function bibdk_furthersearch_get_table($furtherSearchArray) {
-  //XXX do javascript solution!
+function bibdk_furthersearch_get_table($furtherSearchArray, $id) {
   $header = array(
     t('further_search_types', array(), array('context' => 'bibdk_furthersearch')),
     t('further_search_elements', array(), array('context' => 'bibdk_furthersearch')),
@@ -42,12 +44,18 @@ function bibdk_furthersearch_get_table($furtherSearchArray) {
   );
 
   $rows = _bibdk_furthersearch_get_rows($furtherSearchArray);
+  $uid = _bibdk_furthersearch_trim_string($id);
 
   $table['table'] = array(
     '#theme' => 'table',
     '#header' => $header,
     '#rows' => $rows,
     '#empty' => t('no_further_search_found', array(), array('context' => 'bibdk_furthersearch')),
+    '#attributes' => array(
+      'class' => array(
+        'further-search-table-' . $uid,
+      ),
+    ),
   );
 
   $table['submit'] = array(
@@ -55,7 +63,10 @@ function bibdk_furthersearch_get_table($furtherSearchArray) {
     '#value' => t('do_search', array(), array('context' => 'bibdk_furthersearch')),
     '#attributes' => array(
       'class' => array(
-        'hest-knap'
+        'further-search-btn',
+      ),
+      'data-id' => array(
+        $uid,
       ),
     ),
     '#attached' => array(
@@ -65,36 +76,12 @@ function bibdk_furthersearch_get_table($furtherSearchArray) {
     ),
   );
 
-  $s = drupal_process_attached($table['submit']);
-  dpm($s, '$s');
-
-
-  /*$form['furthersearch']['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'submit',
-    '#submit' => array('bibdk_furthersearch_form_submit'),
-  );*/
-
   return $table;
 }
 
-
 /**
- * @param $form
- * @param $form_state
- * @return bool
- */
-function bibdk_furthersearch_form_submit() {
-  dpm($_GET, 'get');
-  dpm($_POST, 'post');
-  dpm($_REQUEST, 'req');
-  dpm(func_get_args(), 'args');
-  return 'testhest';
-  //drupal_goto('');
-}
-
-
-/**
+ * Produces rows for the further search table displayed on manifestation level
+ *
  * @param $furtherSearchArray
  * @return array
  */
@@ -108,26 +95,34 @@ function _bibdk_furthersearch_get_rows($furtherSearchArray) {
   $length = max(count($types), count($elements), count($fictions));
 
   for ($i = 0; $i < $length; $i++) {
-    $type = isset($types[$i]) ? _create_checkbox($types[$i]) : '';
-    $element = isset($elements[$i]) ? _create_checkbox($elements[$i]) : '';
-    $fiction = isset($fictions[$i]) ? _create_checkbox($fictions[$i]) : '';
+    $type = isset($types[$i]) ? _bibdk_furthersearch_create_checkbox($types[$i], 'type') : '';
+    $element = isset($elements[$i]) ? _bibdk_furthersearch_create_checkbox($elements[$i], 'element') : '';
+    $fiction = isset($fictions[$i]) ? _bibdk_furthersearch_create_checkbox($fictions[$i], 'fiction') : '';
     $rows[] = array($type, $element, $fiction);
   }
   return $rows;
 }
 
 /**
- * @param $element
- * @return string
+ * Returns one single checkbox representing a further search parameter
+ *
+ * @param array $element The element
+ * @param string $type
+ * @return string HTML for a checkbox
  */
-function _create_checkbox($element) {
+function _bibdk_furthersearch_create_checkbox($element, $type) {
 
   $checkbox = array(
     '#theme' => 'checkbox',
-    '#name' => 'hest',
     '#attributes' => array(
+      'class' => array(
+        'further-search-checkbox',
+      ),
       'data-code' => array(
         $element['searchCode'],
+      ),
+      'data-type' => array(
+        $type
       ),
     ),
   );
@@ -136,4 +131,14 @@ function _create_checkbox($element) {
   $output .= $element['display'];
 
   return $output;
+}
+
+/**
+ * Strips a string (pid) for :, -, __
+ *
+ * @param string $string
+ * @return string
+ */
+function _bibdk_furthersearch_trim_string($string) {
+  return strtolower(strtr($string, array(':' => '', '-' => '', '__' => '')));
 }

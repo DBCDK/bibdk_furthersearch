@@ -3,6 +3,19 @@
 module_load_include('inc', 'bibdk_furthersearch', 'bibdk_furthersearch.field');
 
 /**
+ * Implements hook_menu().
+ */
+function bibdk_furthersearch_menu() {
+  $items['bibdk_furthersearch/submit'] = array(
+    'page callback' => 'bibdk_furthersearch_form_submit',
+    'page arguments' => array(1, 2, 3, 4, 5, 6),
+    'type' => MENU_CALLBACK,
+    'access callback' => TRUE,
+  );
+  return $items;
+}
+
+/**
  * Implements hook_theme().
  */
 function bibdk_furthersearch_theme() {
@@ -12,4 +25,115 @@ function bibdk_furthersearch_theme() {
       'template' => 'theme/bibdk_furthersearch',
     )
   );
+}
+
+/**
+ * @param $furtherSearchArray
+ * @internal param $form
+ * @internal param $form_state
+ * @return mixed
+ */
+function bibdk_furthersearch_get_table($furtherSearchArray) {
+  //XXX do javascript solution!
+  $header = array(
+    t('further_search_types', array(), array('context' => 'bibdk_furthersearch')),
+    t('further_search_elements', array(), array('context' => 'bibdk_furthersearch')),
+    t('further_search_fictions', array(), array('context' => 'bibdk_furthersearch')),
+  );
+
+  $rows = _bibdk_furthersearch_get_rows($furtherSearchArray);
+
+  $table['table'] = array(
+    '#theme' => 'table',
+    '#header' => $header,
+    '#rows' => $rows,
+    '#empty' => t('no_further_search_found', array(), array('context' => 'bibdk_furthersearch')),
+  );
+
+  $table['submit'] = array(
+    '#theme' => 'button',
+    '#value' => t('do_search', array(), array('context' => 'bibdk_furthersearch')),
+    '#attributes' => array(
+      'class' => array(
+        'hest-knap'
+      ),
+    ),
+    '#attached' => array(
+      'js' => array(
+        drupal_get_path('module', 'bibdk_furthersearch') . '/js/bibdk_furthersearch.js'
+      ),
+    ),
+  );
+
+  $s = drupal_process_attached($table['submit']);
+  dpm($s, '$s');
+
+
+  /*$form['furthersearch']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'submit',
+    '#submit' => array('bibdk_furthersearch_form_submit'),
+  );*/
+
+  return $table;
+}
+
+
+/**
+ * @param $form
+ * @param $form_state
+ * @return bool
+ */
+function bibdk_furthersearch_form_submit() {
+  dpm($_GET, 'get');
+  dpm($_POST, 'post');
+  dpm($_REQUEST, 'req');
+  dpm(func_get_args(), 'args');
+  return 'testhest';
+  //drupal_goto('');
+}
+
+
+/**
+ * @param $furtherSearchArray
+ * @return array
+ */
+function _bibdk_furthersearch_get_rows($furtherSearchArray) {
+  $rows = array();
+
+  $types = array_values($furtherSearchArray['types']);
+  $elements = array_values($furtherSearchArray['elements']);
+  $fictions = array_values($furtherSearchArray['fictions']);
+
+  $length = max(count($types), count($elements), count($fictions));
+
+  for ($i = 0; $i < $length; $i++) {
+    $type = isset($types[$i]) ? _create_checkbox($types[$i]) : '';
+    $element = isset($elements[$i]) ? _create_checkbox($elements[$i]) : '';
+    $fiction = isset($fictions[$i]) ? _create_checkbox($fictions[$i]) : '';
+    $rows[] = array($type, $element, $fiction);
+  }
+  return $rows;
+}
+
+/**
+ * @param $element
+ * @return string
+ */
+function _create_checkbox($element) {
+
+  $checkbox = array(
+    '#theme' => 'checkbox',
+    '#name' => 'hest',
+    '#attributes' => array(
+      'data-code' => array(
+        $element['searchCode'],
+      ),
+    ),
+  );
+
+  $output = drupal_render($checkbox);
+  $output .= $element['display'];
+
+  return $output;
 }

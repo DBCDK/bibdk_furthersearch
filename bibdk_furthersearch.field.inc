@@ -42,23 +42,36 @@ function bibdk_furthersearch_field_load($entity_type, $entities, $field, $instan
 
 /**
  * Implements hook_field_formatter_view().
+ *
  * @param String $entity_type
  * @param bibdkWork $entity
  * @param array $field
- * @param array  $instance
+ * @param array $instance
  * @param String $langcode
  * @param array $items
  * @param array $display
  * @return array
  */
 function bibdk_furthersearch_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-  $furtherSearches = $entity->getFurtherSearches();
+  $furtherSearchArray = _bibdk_furthersearch_get_further_search($entity);
+  $form = bibdk_furthersearch_get_table($furtherSearchArray);
 
-  $themeArray['types'] = isset($furtherSearches['furtherSearchType']) ? $furtherSearches['furtherSearchType'] : array();
-  $themeArray['elements'] = isset($furtherSearches['furtherSearchElement']) ? $furtherSearches['furtherSearchElement'] : array();
-  $themeArray['fictions'] = isset($furtherSearches['furtherSearchFiction']) ? $furtherSearches['furtherSearchFiction'] : array();
-
-  $element[]['#markup'] = theme('bibdk_furthersearch_tab_content', $themeArray);
-
+  #$element[]['#markup'] = theme('bibdk_furthersearch_tab_content', $furtherSearchArray);
+  $element[]['#markup'] = drupal_render($form);
   return $element;
+}
+
+/**
+ * @param bibdkWork $entity
+ * @return array
+ */
+function _bibdk_furthersearch_get_further_search($entity) {
+  $furtherSearches = $entity->getFurtherSearches();
+  $furtherSearchArray = array();
+  if ($furtherSearches) {
+    $furtherSearchArray['types'] = isset($furtherSearches['furtherSearchType']) ? $furtherSearches['furtherSearchType'] : array();
+    $furtherSearchArray['elements'] = isset($furtherSearches['furtherSearchElement']) ? $furtherSearches['furtherSearchElement'] : array();
+    $furtherSearchArray['fictions'] = isset($furtherSearches['furtherSearchFiction']) ? $furtherSearches['furtherSearchFiction'] : array();
+  }
+  return $furtherSearchArray;
 }

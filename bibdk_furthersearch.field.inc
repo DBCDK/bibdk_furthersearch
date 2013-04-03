@@ -53,11 +53,12 @@ function bibdk_furthersearch_field_load($entity_type, $entities, $field, $instan
  * @return array
  */
 function bibdk_furthersearch_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
   $furtherSearchArray = _bibdk_furthersearch_get_further_search($entity);
-  $form = bibdk_furthersearch_get_table($furtherSearchArray, $entity->getId());
-
-  #$element[]['#markup'] = theme('bibdk_furthersearch_tab_content', $furtherSearchArray);
-  $element[]['#markup'] = drupal_render($form);
+  if(!empty($furtherSearchArray)){
+    $table = bibdk_furthersearch_get_table($furtherSearchArray, $entity->getId());
+    $element[]['#markup'] = drupal_render($table);
+  }
   return $element;
 }
 

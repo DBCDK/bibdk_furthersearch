@@ -3,33 +3,6 @@
 module_load_include('inc', 'bibdk_furthersearch', 'bibdk_furthersearch.field');
 
 /**
- * Implements hook_menu().
- */
-function bibdk_furthersearch_menu() {
-  //XXX mmj is this method necessary?
-  $items['bibdk_furthersearch/submit'] = array(
-    'page callback' => 'bibdk_furthersearch_form_submit',
-    'page arguments' => array(1, 2, 3, 4, 5, 6),
-    'type' => MENU_CALLBACK,
-    'access callback' => TRUE,
-  );
-  return $items;
-}
-
-/**
- * Implements hook_theme().
- */
-function bibdk_furthersearch_theme() {
-  //XXX mmj is this method necessary?
-  return array(
-    'bibdk_furthersearch_tab_content' => array(
-      'variables' => array('types' => array(), 'fictions' => array(), 'elements' => array()),
-      'template' => 'theme/bibdk_furthersearch',
-    )
-  );
-}
-
-/**
  * Returns table with checkboxes for further searches
  *
  * @param array $furtherSearchArray
@@ -111,7 +84,6 @@ function _bibdk_furthersearch_get_rows($furtherSearchArray) {
  * @return string HTML for a checkbox
  */
 function _bibdk_furthersearch_create_checkbox($element, $type) {
-
   $checkbox = array(
     '#theme' => 'checkbox',
     '#attributes' => array(
@@ -119,7 +91,7 @@ function _bibdk_furthersearch_create_checkbox($element, $type) {
         'further-search-checkbox',
       ),
       'data-code' => array(
-        $element['searchCode'],
+        ($type == 'type') ? str_replace(array('=', '"'), array(':', ''), $element['searchCode']) : $element['searchCode'],
       ),
       'data-type' => array(
         $type

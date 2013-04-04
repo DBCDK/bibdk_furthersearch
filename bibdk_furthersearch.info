@@ -8,3 +8,4 @@ dependencies[] = ting_openformat
 dependencies[] = field
 
 files[] = bibdk_furthersearch.field.inc
+files[] = test/bibdk_furthersearch.test

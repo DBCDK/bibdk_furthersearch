@@ -33,6 +33,7 @@ function bibdk_furthersearch_get_table($furtherSearchArray, $id) {
 
   $table['submit'] = array(
     '#theme' => 'button',
+    '#button_type' => 'submit',
     '#value' => t('do_search', array(), array('context' => 'bibdk_furthersearch')),
     '#attributes' => array(
       'class' => array(

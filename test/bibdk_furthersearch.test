@@ -18,9 +18,24 @@ class BibdkFurtherSearchTestCase extends DrupalWebTestCase {
 
   public function setUp() {
     parent::setUp('bibdk_furthersearch');
+    module_load_include('inc', 'bibdk_furthersearch', 'bibdk_furthersearch.field');
   }
-  
-  public function () {
-    
+
+  public function testRunner() {
+    $this->testParseEntity();
+  }
+
+  private function testParseEntity() {
+    $entity = drupal_json_decode($this->loadFile('entity_mockup.json'));
+    $furtherSearchArray = _bibdk_furthersearch_get_further_search($entity);
+    debug($furtherSearchArray);
+  }
+
+  /**
+   * @param $filename
+   * @return string
+   */
+  private function loadFile($filename) {
+    return file_get_contents(drupal_get_path('module', 'bibdk_furthersearch') . '/test/mockup/' . $filename);
   }
 }

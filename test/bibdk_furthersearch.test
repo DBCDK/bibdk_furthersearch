@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * Class BibdkFurtherSearchTestCase
+ */
+class BibdkFurtherSearchTestCase extends DrupalWebTestCase {
+
+  /**
+   * @return array
+   */
+  public static function getInfo() {
+    return array(
+      'name' => t('Bibdk Further Search Test'),
+      'Description' => t('Test Further Search Functionality'),
+      'group' => t('Bibliotek.dk - Further Search'),
+    );
+  }
+
+  public function setUp() {
+    parent::setUp('bibdk_furthersearch');
+  }
+  
+  public function () {
+    
+  }
+}

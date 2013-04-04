@@ -31,7 +31,7 @@ class BibdkFurtherSearchTestCase extends DrupalWebTestCase {
   }
 
   private function testParseEntity() {
-    debug('testParseEntity begun');
+    debug('testParseEntity begun:');
     $furtherSearches = drupal_json_decode($this->loadFile('furtherSearches_mockup.json'));
     $this->furtherSearchArray = _bibdk_furthersearch_get_further_search($furtherSearches);
     $this->assertTrue(array_key_exists('types', $this->furtherSearchArray));
@@ -41,7 +41,7 @@ class BibdkFurtherSearchTestCase extends DrupalWebTestCase {
     $this->assertTrue(array_key_exists('fictions', $this->furtherSearchArray));
     $this->assertTrue(is_array($this->furtherSearchArray['fictions']));
 
-    debug('Testing if no furtherSearches are provided:');
+    debug(' Testing if no furtherSearches are provided:');
     $this->furtherSearchArray = _bibdk_furthersearch_get_further_search(array());
     $this->assertTrue(array_key_exists('types', $this->furtherSearchArray));
     $this->assertTrue(is_array($this->furtherSearchArray['types']));
@@ -53,7 +53,7 @@ class BibdkFurtherSearchTestCase extends DrupalWebTestCase {
   }
 
   private function testGetRows() {
-    debug('testGetRows begun');
+    debug('testGetRows begun:');
     $furtherSearches = drupal_json_decode($this->loadFile('furtherSearches_mockup.json'));
     $this->furtherSearchArray = _bibdk_furthersearch_get_further_search($furtherSearches);
 
@@ -73,7 +73,7 @@ class BibdkFurtherSearchTestCase extends DrupalWebTestCase {
   }
 
   private function testTableGeneration() {
-    debug('testTableGeneration begun');
+    debug('testTableGeneration begun:');
     $furtherSearches = drupal_json_decode($this->loadFile('furtherSearches_mockup.json'));
     $this->furtherSearchArray = _bibdk_furthersearch_get_further_search($furtherSearches);
 

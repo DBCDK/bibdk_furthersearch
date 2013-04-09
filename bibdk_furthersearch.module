@@ -3,6 +3,48 @@
 module_load_include('inc', 'bibdk_furthersearch', 'bibdk_furthersearch.field');
 
 /**
+ * Implements hook_worktabs_items().
+ *
+ * @param $tabs
+ * @param bibdkWork $entity
+ */
+function bibdk_furthersearch_worktabs_items($tabs, $entity) {
+  $tabs['more-about']['further_search'] = array(
+    '#title' => t('further_search', array(), array('context' => 'bibdk_furthersearch')),
+    '#button_text' => t('see_more', array(), array('context' => 'bibdk_furthersearch')),
+    '#markup' => bibdk_furthersearcg_get_tab_content($entity),
+    '#weight' => 10,
+  );
+  return $tabs;
+}
+
+/**
+ * @param bibdkWork $entity
+ * @return array
+ */
+function bibdk_furthersearcg_get_tab_content($entity) {
+  $furtherSearchArray = _bibdk_furthersearch_get_further_search($entity->getFurtherSearches());
+  if(!empty($furtherSearchArray)){
+    $table = bibdk_furthersearch_get_table($furtherSearchArray, $entity->getId());
+    $element = drupal_render($table);
+  }
+  return (isset($element)) ? $element : '';
+}
+
+/**
+ * @param array $furtherSearches
+ * @internal param \bibdkWork $entity
+ * @return array
+ */
+function _bibdk_furthersearch_get_further_search($furtherSearches) {
+  $furtherSearchArray = array();
+  $furtherSearchArray['types'] = isset($furtherSearches['furtherSearchType']) ? $furtherSearches['furtherSearchType'] : array();
+  $furtherSearchArray['elements'] = isset($furtherSearches['furtherSearchElement']) ? $furtherSearches['furtherSearchElement'] : array();
+  $furtherSearchArray['fictions'] = isset($furtherSearches['furtherSearchFiction']) ? $furtherSearches['furtherSearchFiction'] : array();
+  return $furtherSearchArray;
+}
+
+/**
  * Returns table with checkboxes for further searches
  *
  * @param array $furtherSearchArray

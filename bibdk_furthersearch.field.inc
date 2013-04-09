@@ -61,16 +61,3 @@ function bibdk_furthersearch_field_formatter_view($entity_type, $entity, $field,
   }
   return $element;
 }
-
-/**
- * @param array $furtherSearches
- * @internal param \bibdkWork $entity
- * @return array
- */
-function _bibdk_furthersearch_get_further_search($furtherSearches) {
-  $furtherSearchArray = array();
-  $furtherSearchArray['types'] = isset($furtherSearches['furtherSearchType']) ? $furtherSearches['furtherSearchType'] : array();
-  $furtherSearchArray['elements'] = isset($furtherSearches['furtherSearchElement']) ? $furtherSearches['furtherSearchElement'] : array();
-  $furtherSearchArray['fictions'] = isset($furtherSearches['furtherSearchFiction']) ? $furtherSearches['furtherSearchFiction'] : array();
-  return $furtherSearchArray;
-}

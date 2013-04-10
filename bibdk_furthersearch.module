@@ -9,7 +9,7 @@ module_load_include('inc', 'bibdk_furthersearch', 'bibdk_furthersearch.field');
  * @param bibdkWork $entity
  */
 function bibdk_furthersearch_worktabs_items($tabs, $entity) {
-  $tabs['more-about']['further_search'] = array(
+  $tabs['more-about']['further-search'] = array(
     'title' => t('further_search', array(), array('context' => 'bibdk_furthersearch')),
     'btn_txt_closed' => t('view_more', array(), array('context' => 'bibdk_furthersearch')),
     'rendered' => bibdk_furthersearcg_get_tab_content($entity),
@@ -17,6 +17,7 @@ function bibdk_furthersearch_worktabs_items($tabs, $entity) {
   );
   return $tabs;
 }
+
 
 /**
  * @param bibdkWork $entity

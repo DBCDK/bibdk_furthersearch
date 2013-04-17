@@ -25,7 +25,7 @@ function bibdk_furthersearch_worktabs_items($tabs, $entity) {
  */
 function bibdk_furthersearch_get_tab_content($entity) {
   $furtherSearchArray = _bibdk_furthersearch_get_further_search($entity->getFurtherSearches());
-  if(!empty($furtherSearchArray)){
+  if (!empty($furtherSearchArray)) {
     $table = bibdk_furthersearch_get_table($furtherSearchArray, $entity->getId());
     $element = drupal_render($table);
   }

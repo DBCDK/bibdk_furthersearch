@@ -55,7 +55,7 @@ function bibdk_furthersearch_field_load($entity_type, $entities, $field, $instan
 function bibdk_furthersearch_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
   $furtherSearchArray = _bibdk_furthersearch_get_further_search($entity->getFurtherSearches());
-  if(!empty($furtherSearchArray)){
+  if (!empty($furtherSearchArray)) {
     $table = bibdk_furthersearch_get_table($furtherSearchArray, $entity->getId());
     $element[]['#markup'] = drupal_render($table);
   }

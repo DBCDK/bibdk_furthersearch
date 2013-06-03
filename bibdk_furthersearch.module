@@ -62,6 +62,11 @@ function bibdk_furthersearch_get_table($furtherSearchArray, $id) {
   $rows = _bibdk_furthersearch_get_rows($furtherSearchArray);
   $uid = _bibdk_furthersearch_trim_string($id);
 
+  $table['first_para'] = array(
+    '#type' => 'markup',
+    '#markup' => '<p class="further-search-helptext-top">' . t('further_search_helptext_top', array(), array('context' => 'bibdk_furthersearch') ) . '</p>',
+  );
+
   $table['table'] = array(
     '#theme' => 'table',
     '#header' => $header,
@@ -72,6 +77,11 @@ function bibdk_furthersearch_get_table($furtherSearchArray, $id) {
         'further-search-table-' . $uid,
       ),
     ),
+  );
+
+  $table['last_para'] = array(
+    '#type' => 'markup',
+    '#markup' => '<p class="further-search-helptext-bottom">' . t('further_search_helptext_bottom', array(), array('context' => 'bibdk_furthersearch') ) . '</p>',
   );
 
   $table['submit'] = array(

@@ -1,7 +1,5 @@
 <?php
 
-module_load_include('inc', 'bibdk_furthersearch', 'bibdk_furthersearch.field');
-
 /**
  * Implements hook_worktabs_items().
  *

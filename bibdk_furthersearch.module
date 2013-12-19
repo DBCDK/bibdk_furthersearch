@@ -152,7 +152,7 @@ function _bibdk_furthersearch_create_checkbox($element, $type) {
   );
 
   $output = drupal_render($checkbox);
-  $output .= t($element['display'], array(), array('context' => 'bibdk_furthersearch'));
+  $output .= $element['display'];
 
   return $output;
 }

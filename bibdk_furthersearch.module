@@ -8,9 +8,9 @@
  */
 function bibdk_furthersearch_worktabs_items($tabs, $entity) {
   $tabs['more-about']['further-search'] = array(
-    'title' => t('further_search', array(), array('context' => 'bibdk_furthersearch')),
-    'btn_txt_closed' => t('view_more', array(), array('context' => 'bibdk_furthersearch')),
-    'rendered' => bibdk_furthersearch_get_tab_content($entity),
+    '#title' => t('further_search', array(), array('context' => 'bibdk_furthersearch')),
+    '#btn_txt_closed' => t('view_more', array(), array('context' => 'bibdk_furthersearch')),
+    '#content' => bibdk_furthersearch_get_tab_content($entity),
     'weight' => 10,
   );
   return $tabs;

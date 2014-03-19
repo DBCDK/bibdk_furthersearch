@@ -3,10 +3,10 @@
 /**
  * Implements hook_worktabs_items().
  *
- * @param $tabs
  * @param bibdkWork $entity
  */
-function bibdk_furthersearch_worktabs_items($tabs, $entity) {
+function bibdk_furthersearch_worktabs_items($entity) {
+  $tabs = array();
   $tabs['more-about']['further-search'] = array(
     '#title' => t('further_search', array(), array('context' => 'bibdk_furthersearch')),
     '#btn_txt_closed' => t('view_more', array(), array('context' => 'bibdk_furthersearch')),

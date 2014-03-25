@@ -7,10 +7,20 @@
  */
 function bibdk_furthersearch_worktabs_items($entity) {
   $tabs = array();
+  $content = bibdk_furthersearch_get_tab_content($entity);
+  $empty = count($content['table']['#rows']) == 0;
+
+  if ($empty) {
+    $content = array(
+      '#theme' => 'worktabs_no_content',
+      '#no_content' => $content['table']['#empty'],
+    );
+  }
+
   $tabs['more-about']['further-search'] = array(
     '#title' => t('further_search', array(), array('context' => 'bibdk_furthersearch')),
     '#btn_txt_closed' => t('view_more', array(), array('context' => 'bibdk_furthersearch')),
-    '#content' => bibdk_furthersearch_get_tab_content($entity),
+    '#content' => $content,
     'weight' => 10,
   );
   return $tabs;
@@ -24,8 +34,7 @@ function bibdk_furthersearch_worktabs_items($entity) {
 function bibdk_furthersearch_get_tab_content($entity) {
   $furtherSearchArray = _bibdk_furthersearch_get_further_search($entity->getFurtherSearches());
   $table = bibdk_furthersearch_get_table($furtherSearchArray, $entity->getId());
-  $element = drupal_render($table);
-  return $element;
+  return $table;
 }
 
 /**

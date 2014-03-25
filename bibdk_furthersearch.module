@@ -23,11 +23,9 @@ function bibdk_furthersearch_worktabs_items($entity) {
  */
 function bibdk_furthersearch_get_tab_content($entity) {
   $furtherSearchArray = _bibdk_furthersearch_get_further_search($entity->getFurtherSearches());
-  if (!empty($furtherSearchArray)) {
-    $table = bibdk_furthersearch_get_table($furtherSearchArray, $entity->getId());
-    $element = drupal_render($table);
-  }
-  return (isset($element)) ? $element : '';
+  $table = bibdk_furthersearch_get_table($furtherSearchArray, $entity->getId());
+  $element = drupal_render($table);
+  return $element;
 }
 
 /**

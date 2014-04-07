@@ -1,7 +1,7 @@
 name = Bibliotek.dk - Further Search
 description = Adds a link on manifestations for further search
 core = 7.x
-version = 7.x-0.5
+version = 7.x-0.6
 package = Bibliotek.dk
 
 dependencies[] = ting_openformat

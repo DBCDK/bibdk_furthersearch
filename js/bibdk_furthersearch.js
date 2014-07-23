@@ -32,7 +32,7 @@
     Drupal.makeUrl = function(types, elements, fictions) {
         var url = elements;
         if(fictions !== ''){
-            url += ' and ' + fictions;
+            url += ' ' + Drupal.t('BOOLEAN_AND') + ' ' + fictions;
         }
 
         if(types !== '') {
@@ -55,7 +55,7 @@
         if(elements === '') {
             elements = element;
         } else {
-            elements += ' and ' + element;
+            elements += ' ' + Drupal.t('BOOLEAN_AND') + ' ' + element;
         }
         return elements;
     };
@@ -64,7 +64,7 @@
         if(fictions === '') {
             fictions = type;
         } else {
-            fictions += ' and ' + type;
+            fictions += ' ' + Drupal.t('BOOLEAN_AND') + ' ' + type;
         }
         return fictions;
     };
